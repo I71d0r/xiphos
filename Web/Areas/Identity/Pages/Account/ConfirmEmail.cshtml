@@ -1,0 +1,22 @@
+﻿@* --Notable--
+    Identity UI is by default provided ina Razor class library. One can scaffold its parts to get it customized.
+    Right-click on the project -> Add -> New Scaffolded Item -> Identity and select pages you want to alter.
+    https://docs.microsoft.com/en-us/aspnet/core/security/authentication/scaffold-identity?view=aspnetcore-5.0&tabs=visual-studio
+
+    Note: I was not able to get the scaffoleder working with centralized package management. It throws restore errors.
+*@
+
+@page
+
+@using Microsoft.AspNetCore.Identity.UI.V4.Pages.Internal.Account.Manage
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Email confirmation";
+}
+
+<h1 class="text-light">@ViewData["Title"]</h1>
+
+<p class="text-light">@Model.StatusMessage</p>
+
+<a class="nav-link" asp-area="Administration" asp-controller="Melody" asp-action="Index">Go to Administration...</a>
+<a class="nav-link" asp-controller="Home" asp-action="Index">Go to Tone Zone ...</a>

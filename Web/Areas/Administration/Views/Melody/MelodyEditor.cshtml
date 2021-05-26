@@ -1,0 +1,51 @@
+﻿@model MelodyModel
+
+<div class="mx-auto text-left w-75">
+    <h2 class="text-light py-4">@ViewBag.Header</h2>
+
+    @using (Html.BeginForm("Save", "Melody", FormMethod.Post))
+    {
+        @Html.EditorForModel()
+
+        @if (ViewBag.ReadOnly)
+        {
+            <div class="row float-right mr-1">
+                <a class="ml-3 btn btn-secondary" asp-action="Index">Back</a>
+            </div>
+        }
+        else
+        {
+            <div class="row float-right mr-1">
+                @* --Notable--
+                    Hidden input carries operation name rendered from view data.
+                    This will be mapped to action parameter operation.
+                *@
+                <input type="hidden" name="operation" value="@ViewBag.Operation" />
+
+                @* --Notable--
+                    Hidden input carries also current query string stored in view data in action code.
+                *@
+                <input type="hidden" name="query" value="@ViewBag.QueryString" />
+
+
+                <input class="btn btn-primary" type="submit" name="submit" value="Save" />
+                <input class="ml-3 btn btn-warning" type="reset" value="Reset Changes" />
+
+                @* --Notable--
+                    The asp-all-route-data tag allows to pass additional query data.
+                    We need to pass the origin query string back to not loose the view configuration.
+                *@
+                <a class="ml-3 btn btn-secondary" asp-action="Index" asp-all-route-data="@ViewBag.Parameters">Cancel Edit</a>
+            </div>
+        }
+    }
+</div>
+
+@* --Notable--
+    Script section is automatically rendered by the layout. We need validation scripts on this form
+    to perform a client side validation.
+*@
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/melody-validators.js" asp-append-version="true"></script>
+}

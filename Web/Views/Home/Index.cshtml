@@ -1,0 +1,93 @@
+﻿@model ToneZoneModel
+@{
+    ViewData["Title"] = "Tone Zone";
+
+    var debugDisplay = Model.DisplayDebugMessages ? "" : "display: none;";
+}
+
+<link rel="stylesheet" href="~/css/home.css" />
+
+<div class="text-light">
+    <div id="debugData" class="text-info float-left w-25 position-absolute" style="@debugDisplay">debug</div>
+    <div class="w-100 text-center">
+        <label id="animated-logo" class="mb-5 h1 logo"></label>
+    </div>
+    <table class="mx-auto w-75">
+        <tbody>
+        <tr>
+            <td class="w-25 align-top">
+                <input type="text"
+                       placeholder="Search..."
+                       value="@ViewBag.Filter"
+                       class="form-control"
+                       id="melodyFilter">
+                <table class="table table-hover table-dark melody-table">
+                    <tbody id="melodyTable">
+                    </tbody>
+                </table>
+                <label id="moreDataLabel">Loading...</label>
+            </td>
+            <td class="pl-5 align-top">
+                <label class="h2">Melody</label>
+                <div class="w-100 mb-3">
+                    <canvas id="fftCanvas" class="w-100 fft-canvas"></canvas>
+                </div>
+                <div class="progress bg-dark mb-2">
+                    <div class="progress-bar progress-bar-animated progress-bar-striped bg-success fast-transition" role="progressbar" style="width: 0"></div>
+                </div>
+                <table class="w-100 lead">
+                    <tbody>
+                    <tr>
+                        <td class="w-50">Note<label id="fLabel" class="ml-2">-</label></td>
+                        <td class="w-25"><label id="scoreLabel"></label></td>
+                        <td class="float-right"><input type="button" class="btn btn-warning" value="Start" onclick="resetMelody(true);"/></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div id="melody" class="row pl-3 pt-2">
+                </div>
+                <div id="winLabel"></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script src="~/js/logo.js" asp-append-version="true"></script>
+<script src="~/js/tzone-pitch-detection.js" asp-append-version="true"></script>
+<script src="~/js/tzone-ui.js" asp-append-version="true"></script>
+
+@* --Notable--
+    Example of a dynamic script generation.
+    For writing HTML (also JS) in C# code block use block @:
+
+    <script type="text/javascript">
+    @{
+        for (int i = 0; i < 3; i++)
+        {
+            @:console.log("Test @i");
+        }
+    }
+    </script>
+
+    Will generate script:
+        console.log("Test 0");
+        console.log("Test 1");
+        console.log("Test 2");
+*@
+<script type="text/javascript">
+    var maxCount = @Model.MaxDisplayRowsCount;
+    var filter = @Html.Raw(string.IsNullOrEmpty(ViewBag.Filter) ? "\"\"" : ViewBag.Filter);
+
+    loadMelodies(maxCount, filter, true);
+
+    // todo: we better register change and fetch new list with an interval to not DoS with every key stroke
+    $("#melodyFilter").on('input propertychange paste', function(event) {
+        loadMelodies(maxCount, event.currentTarget.value, false);
+    });
+
+    var logo = new AnimatedLogo("animated-logo", "Tone Zone");
+</script>
+

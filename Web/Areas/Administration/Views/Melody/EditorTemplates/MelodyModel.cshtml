@@ -1,0 +1,76 @@
+﻿@* --Notable--
+    Model editors templates are by convention located in EditorTemplates folder,
+    and rendered by @Html.EditorForModel() that looks for identical model editor.
+*@
+
+@model Xiphos.Areas.Administration.Models.MelodyModel
+
+<table class="table table-dark">
+    <tbody>
+        @Html.ValidationSummary(excludePropertyErrors: false, message: "", htmlAttributes: new { @class = "text-danger" })
+
+        @* --Notable--
+            Server code allows to condition rendered HTML. In this case we will share edit view
+            for create and edit operations. The difference is that new melodyModel does not have Id
+            nor it makes sense to display it. New object model is passed as null (by choice).
+        *@
+        @if (Model != null)
+        {
+            <tr>
+                <th scope="row">@Html.DisplayNameFor(r => r.Id)</th>
+                <td>
+                    @Html.DisplayFor(r => r.Id)
+                    @* --Notable--
+                        Hidden input id will be mapped to id property. This is not done automatically
+                        because we have just a non-editable label rendered instead of text box editor.
+                    *@
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                </td>
+            </tr>
+        }
+        <tr>
+            <th scope="row" class="w-25">@Html.DisplayNameFor(r => r.Name)</th>
+
+            @* --Notable--
+                Templating methods have also overloads allowing to pass custom attributes to rendered elements.
+                E.g. @Html.TextBoxFor(r => r.Name, new { style = "..." })
+            *@
+
+            <td>
+                @* --Notable--
+                    Conditional rendering is one way how to achieve contextual changes.
+                    You can also create a readonly model and respective editor.
+                    You can also create a separate view for displaying and editing.
+                    What to choose depends on many factors including form complexity,
+                    potential code duplication, or dynamic changes scope.
+                *@
+                @if (ViewBag.ReadOnly)
+                {
+                    @Html.TextBoxFor(m => m.Name, htmlAttributes: new { @class = "w-100", @readonly = "readonly" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(m => m.Name, htmlAttributes: new { @class = "w-100" })
+                    @Html.ValidationMessageFor(m => m.Name, "", htmlAttributes: new { @class = "text-danger" })
+                }
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="w-25">
+                @Html.DisplayNameFor(m => m.Data)
+                <span style="font-size: 20px; cursor: pointer" onclick="alert('TODO: Help with the syntax.');">&#128565;</span>
+            </th>
+            <td>
+                @if (ViewBag.ReadOnly)
+                {
+                    @Html.TextAreaFor(m => m.Data, htmlAttributes: new { @class = "w-100", rows = 10, @readonly = "readonly" })
+                }
+                else
+                {
+                    @Html.TextAreaFor(m => m.Data, htmlAttributes: new { @class = "w-100", rows = 10 })
+                    @Html.ValidationMessageFor(m => m.Data, "", htmlAttributes: new { @class = "text-danger" })
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>

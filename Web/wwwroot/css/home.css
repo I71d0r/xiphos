@@ -1,0 +1,75 @@
+﻿.logo {
+    -webkit-animation: text_pulse 5s infinite alternate;
+    -moz-animation: text_pulse 5s infinite alternate;
+    -o-animation: text_pulse 5s infinite alternate;
+    animation: text_pulse 5s infinite alternate;
+}
+
+@-webkit-keyframes text_pulse {
+    from {
+        color: #008b8b;
+    }
+
+    to {
+        color: #00bfff;
+    }
+}
+
+@-moz-keyframes text_pulse {
+    from {
+        color: #008b8b;
+    }
+
+    to {
+        color: #00bfff;
+    }
+}
+
+@-o-keyframes text_pulse {
+    from {
+        color: #008b8b;
+    }
+
+    to {
+        color: #00bfff;
+    }
+}
+
+@keyframes text_pulse {
+    from {
+        color: #008b8b;
+    }
+
+    to {
+        color: #00bfff;
+    }
+}
+
+.melody-table {
+    cursor: pointer;
+}
+
+.note {
+    width: 40px;
+    text-align: center;
+}
+
+.progress-bar {
+    padding: 2px;
+}
+
+    .progress-bar div {
+        height: 12px;
+    }
+
+.fast-transition {
+    -webkit-transition: width 0.1s;
+    -moz-transition: width 0.1s;
+    -ms-transition: width 0.1s;
+    -o-transition: width 0.1s;
+    transition: width 0.1s;
+}
+
+.fft-canvas {
+    height: 128px;
+}

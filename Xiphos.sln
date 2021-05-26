@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{0389D770-845F-4C27-9183-C8515BEDC735}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{90E1FC0B-6E90-4600-8484-CF215F03F355}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xiphos.Credentials", "Lib\Xiphos.Credentials\Xiphos.Credentials.csproj", "{A1737321-4E2E-4EE0-B102-5CE4F1E22C93}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xiphos", "Web\Xiphos.csproj", "{5717E530-161F-4DA3-B491-41B9BDAEC19D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{69941F0F-5609-46F9-9155-F4B667ECB7A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xiphos.Tests", "Tests\Xiphos.Tests\Xiphos.Tests.csproj", "{01FD4868-322D-40C9-9609-ACF1AF9110ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xiphos.Shared", "Lib\Xiphos.Shared\Xiphos.Shared.csproj", "{3C054E7D-BA81-4C38-A3AD-B258A4E22F06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1737321-4E2E-4EE0-B102-5CE4F1E22C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1737321-4E2E-4EE0-B102-5CE4F1E22C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1737321-4E2E-4EE0-B102-5CE4F1E22C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1737321-4E2E-4EE0-B102-5CE4F1E22C93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5717E530-161F-4DA3-B491-41B9BDAEC19D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5717E530-161F-4DA3-B491-41B9BDAEC19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5717E530-161F-4DA3-B491-41B9BDAEC19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5717E530-161F-4DA3-B491-41B9BDAEC19D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01FD4868-322D-40C9-9609-ACF1AF9110ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01FD4868-322D-40C9-9609-ACF1AF9110ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01FD4868-322D-40C9-9609-ACF1AF9110ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01FD4868-322D-40C9-9609-ACF1AF9110ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C054E7D-BA81-4C38-A3AD-B258A4E22F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C054E7D-BA81-4C38-A3AD-B258A4E22F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C054E7D-BA81-4C38-A3AD-B258A4E22F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C054E7D-BA81-4C38-A3AD-B258A4E22F06}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A1737321-4E2E-4EE0-B102-5CE4F1E22C93} = {0389D770-845F-4C27-9183-C8515BEDC735}
+		{01FD4868-322D-40C9-9609-ACF1AF9110ED} = {69941F0F-5609-46F9-9155-F4B667ECB7A7}
+		{3C054E7D-BA81-4C38-A3AD-B258A4E22F06} = {0389D770-845F-4C27-9183-C8515BEDC735}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A088E95B-55CB-4458-AB1A-AF67418B8C31}
+	EndGlobalSection
+EndGlobal
