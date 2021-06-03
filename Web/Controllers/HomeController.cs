@@ -72,8 +72,8 @@ namespace Xiphos.Controllers
         /// <summary>
         /// Returns melody with given Id
         /// </summary>
-        /// <param name="id">MelodyModel Id</param>
-        /// <returns>MelodyModel model</returns>
+        /// <param name="id">Melody Id</param>
+        /// <returns>Melody model</returns>
         public async Task<ActionResult> FetchMelody(int id)
             => Json(await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id));
 

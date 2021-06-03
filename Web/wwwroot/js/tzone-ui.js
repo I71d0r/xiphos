@@ -41,6 +41,8 @@ function loadMelody(mid) {
     $.getJSON("/Home/FetchMelody", { id: mid },
         function (melody) {
 
+            $("#selectedMelodyName").text(melody.name);
+
             var melodyDiv = $("#melody");
             melodyDiv.fadeOut("fast", function() {
                 melodyDiv.empty();
@@ -98,8 +100,10 @@ function submitNote(notes) {
     }
 
     if (found) {
+        // Good pitch adds 6 on the progressbar
         noteProgress += 6;
     } else {
+        // Bad pitch substracts one on the progressbar 
         if (noteProgress > 0) noteProgress--;
     }
 

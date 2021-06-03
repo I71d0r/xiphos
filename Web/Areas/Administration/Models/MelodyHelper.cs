@@ -5,7 +5,7 @@ using System.Linq;
 namespace Xiphos.Areas.Administration.Models
 {
     /// <summary>
-    /// MelodyModel parsing helper
+    /// Melody parsing helper
     /// </summary>
     public static class MelodyHelper
     {

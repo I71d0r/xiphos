@@ -59,7 +59,7 @@ namespace Xiphos.Areas.Administration.Models
             {
                 TotalCount = count,
                 PageIndex = pageIndex,
-                PageCount = (int)Math.Ceiling(1D * count / pageSize),
+                PageCount = Math.Max(1, (int)Math.Ceiling(1D * count / pageSize)),
                 PageSize = pageSize,
 
                 // --Notable--

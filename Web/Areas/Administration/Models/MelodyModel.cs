@@ -5,7 +5,7 @@ using Xiphos.Areas.Administration.Validation;
 namespace Xiphos.Areas.Administration.Models
 {
     /// <summary>
-    /// MelodyModel model
+    /// Melody model
     /// </summary>
     public class MelodyModel
     {
@@ -14,13 +14,13 @@ namespace Xiphos.Areas.Administration.Models
         public int Id { get; set; }
 
         [MaxLength(512)]
-        [Required(ErrorMessage = "MelodyModel name is required.")]
-        [DisplayName("MelodyModel Name")]
+        [Required(ErrorMessage = "Melody name is required.")]
+        [DisplayName("Melody Name")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "MelodyModel data are required.")]
-        [NotesOnly(ErrorMessage = "MelodyModel data can contain only space delimited notes e.g, C C# Db etc.")]
-        [DisplayName("MelodyModel Data")]
+        [Required(ErrorMessage = "Melody data are required.")]
+        [NotesOnly(ErrorMessage = "Melody data can contain only space delimited notes e.g, C C# Db etc.")]
+        [DisplayName("Melody Data")]
         public string Data { get; set; }
 
     }

@@ -36,7 +36,7 @@ namespace Xiphos.Areas.Administration.Controllers
     // ! Not rendering the UI does not prevent a custom HTTP request crafting.
 
     /// <summary>
-    /// MelodyModel administration controller
+    /// Melody administration controller
     /// </summary>
     [Authorize(Roles = UserRoles.User)]
     [Area("Administration")]
@@ -47,7 +47,7 @@ namespace Xiphos.Areas.Administration.Controllers
 
         private const string CreateOperationName = "CreateMelody";
         private const string EditOperationName = "EditMelody";
-        private const int DefaultPageSize = 8;
+        private const int DefaultPageSize = 5;
 
         public MelodyController(ProductDbContext dbContext, ILogger<MelodyController> logger)
             => (_dbContext, _logger) =
@@ -57,7 +57,7 @@ namespace Xiphos.Areas.Administration.Controllers
                 );
 
         /// <summary>
-        /// MelodyModel indexing action returns a grid view with melodies in database.
+        /// Melody indexing action returns a grid view with melodies in database.
         /// </summary>
         /// <param name="sort">Optional sorting property and direction</param>
         /// <param name="filter">Optional filtering string</param>
@@ -143,7 +143,7 @@ namespace Xiphos.Areas.Administration.Controllers
         [Authorize(Roles = UserRoles.Administrator)]
         public ActionResult Create([FromQuery] IDictionary<string, string> query)
         {
-            ViewBag.Header = "Create New MelodyModel";
+            ViewBag.Header = "Create New Melody";
             ViewBag.Operation = CreateOperationName;
             ViewBag.ReadOnly = false;
             ViewBag.Parameters = query;
@@ -167,13 +167,13 @@ namespace Xiphos.Areas.Administration.Controllers
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
 
             if (melody == null)
-                throw new ArgumentException($"MelodyModel {id} not found");
+                throw new ArgumentException($"Melody {id} not found");
 
             // --Notable--
             // ViewBag and ViewData serves the same purpose.
             // ViewData is a dictionary, ViewBag is a dynamic object easing the syntax a bit.
 
-            ViewBag.Header = "Edit MelodyModel";
+            ViewBag.Header = "Edit Melody";
             ViewBag.Operation = EditOperationName;
             ViewBag.ReadOnly = false;
 
@@ -207,9 +207,9 @@ namespace Xiphos.Areas.Administration.Controllers
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
 
             if (melody == null)
-                throw new ArgumentException($"MelodyModel {id} not found");
+                throw new ArgumentException($"Melody {id} not found");
 
-            ViewBag.Header = "MelodyModel Details";
+            ViewBag.Header = "Melody Details";
             ViewBag.ReadOnly = true;
             ViewBag.Parameters = query;
 
@@ -217,7 +217,7 @@ namespace Xiphos.Areas.Administration.Controllers
         }
 
         // --Notable--
-        // An implicit advantage when using Html templating is that you get model binding for free.
+        // An implicit advantage, when using Html templating, is that you get model binding for free.
         // I can now add a function argument MelodyModel melodyModel that will be bind with form data.
         // Binding mechanics give more flexibility and multiple ways to achieve the data transfer.
         //
@@ -289,7 +289,7 @@ namespace Xiphos.Areas.Administration.Controllers
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
 
             if (melody == null)
-                throw new ArgumentException($"MelodyModel {id} not found");
+                throw new ArgumentException($"Melody {id} not found");
 
             _dbContext.Melodies.Remove(melody);
             await _dbContext.SaveChangesAsync();
