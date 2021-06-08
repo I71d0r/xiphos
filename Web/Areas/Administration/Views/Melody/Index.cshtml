@@ -15,8 +15,8 @@
         {
             <div class="mr-5">
                 <a class="btn btn-outline-primary px-4"
-                   asp-route-sort="@ViewBag.IdSort"
-                   asp-route-filter="@ViewBag.CurrentFilter"
+                   asp-route-sort="@Model.IdSort"
+                   asp-route-filter="@Model.CurrentFilter"
                    asp-route-pageIndex="@Model.PageIndex"
                    asp-route-pageSize="@Model.PageSize"
                    asp-action="Create">
@@ -31,21 +31,21 @@
                        type="text"
                        placeholder="Search..."
                        name="filter"
-                       value="@ViewBag.CurrentFilter"
+                       value="@Model.CurrentFilter"
                        class="form-control">
                 <a class="btn bg-transparent btn-sm"
                    style="margin-left: -30px; z-index: 1000;"
                    asp-action="Index"
-                   asp-route-sort="@ViewBag.CurrentSort"
+                   asp-route-sort="@Model.CurrentSort"
                    asp-route-filter=""
                    asp-route-pageIndex="@Model.PageIndex"
                    asp-route-pageSize="@Model.PageSize">
                     &#215;
                 </a>
-                <input type="hidden" name="sort" value="@ViewBag.CurrentSort">
-                <input type="hidden" name="filter" value="@ViewBag.CurrentFilter">
-                <input type="hidden" name="pageIndex" value="@ViewBag.PageIndex">
-                <input type="hidden" name="pageSize" value="@ViewBag.PageSize">
+                <input type="hidden" name="sort" value="@Model.CurrentSort">
+                <input type="hidden" name="filter" value="@Model.CurrentFilter">
+                <input type="hidden" name="pageIndex" value="@Model.PageIndex">
+                <input type="hidden" name="pageSize" value="@Model.PageSize">
                 <button type="submit" class="btn btn-info">&#128270;</button>
             </form>
         </div>
@@ -68,8 +68,8 @@
             <tr>
                 <th class="pl-3" scope="col">
                     <a asp-action="Index"
-                       asp-route-sort="@ViewBag.IdSort"
-                       asp-route-filter="@ViewBag.CurrentFilter"
+                       asp-route-sort="@Model.IdSort"
+                       asp-route-filter="@Model.CurrentFilter"
                        asp-route-pageIndex="@Model.PageIndex"
                        asp-route-pageSize="@Model.PageSize"
                        class="text-info">
@@ -79,18 +79,18 @@
                             Using server directives automatically escapes the content.
                             Html.Raw(...) skips the encoding.
                         *@
-                        <span class="h5 pl-2">@Html.Raw(ViewBag.IdArrow)</span>
+                        <span class="h5 pl-2">@Html.Raw(Model.IdArrow)</span>
                     </a>
                 </th>
                 <th class="w-75" scope="col">
                     <a asp-action="Index"
-                       asp-route-sort="@ViewBag.NameSort"
-                       asp-route-filter="@ViewBag.CurrentFilter"
+                       asp-route-sort="@Model.NameSort"
+                       asp-route-filter="@Model.CurrentFilter"
                        asp-route-pageIndex="@Model.PageIndex"
                        asp-route-pageSize="@Model.PageSize"
                        class="text-info">
                         @Html.DisplayNameFor(m => m.Default.Name)
-                        <span class="h5 pl-2">@Html.Raw(ViewBag.NameArrow)</span>
+                        <span class="h5 pl-2">@Html.Raw(Model.NameArrow)</span>
                     </a>
                 </th>
             </tr>
@@ -112,8 +112,8 @@
                             @if (ViewBag.IsAdmin)
                             {
                                 <a class="btn btn-outline-primary btn-sm px-4"
-                                   asp-route-sort="@ViewBag.CurrentSort"
-                                   asp-route-filter="@ViewBag.CurrentFilter"
+                                   asp-route-sort="@Model.CurrentSort"
+                                   asp-route-filter="@Model.CurrentFilter"
                                    asp-route-pageIndex="@Model.PageIndex"
                                    asp-route-pageSize="@Model.PageSize"
                                    asp-action="Edit"
@@ -125,8 +125,8 @@
                                     We want a confirmation before delete. Therefore we will use the form
                                     with a script on submit button.
                                 *@
-                                <form asp-route-sort="@ViewBag.CurrentSort"
-                                      asp-route-filter="@ViewBag.CurrentFilter"
+                                <form asp-route-sort="@Model.CurrentSort"
+                                      asp-route-filter="@Model.CurrentFilter"
                                       asp-route-pageIndex="@Model.PageIndex"
                                       asp-route-pageSize="@Model.PageSize"
                                       asp-action="Delete">
@@ -139,8 +139,8 @@
                             else
                             {
                                 <a class="btn btn-outline-info btn-sm px-4"
-                                   asp-route-sort="@ViewBag.CurrentSort"
-                                   asp-route-filter="@ViewBag.CurrentFilter"
+                                   asp-route-sort="@Model.CurrentSort"
+                                   asp-route-filter="@Model.CurrentFilter"
                                    asp-route-pageIndex="@Model.PageIndex"
                                    asp-route-pageSize="@Model.PageSize"
                                    asp-action="View"
@@ -166,8 +166,8 @@
             asp-route-pageIndex="@Model.PageIndex - 1"    string evaluation  => ...pageIndex=2 - 1...
     *@
     <a class="btn btn-secondary btn-sm px-4 @previousDisabled"
-       asp-route-sort="@ViewBag.CurrentSort"
-       asp-route-filter="@ViewBag.CurrentFilter"
+       asp-route-sort="@Model.CurrentSort"
+       asp-route-filter="@Model.CurrentFilter"
        asp-route-pageIndex="@(Model.PageIndex - 1)"
        asp-route-pageSize="@Model.PageSize"
        asp-action="Index">
@@ -175,8 +175,8 @@
     </a>
     <label class="text-light">Page @(Model.PageIndex + 1) out of @Model.PageCount</label>
     <a class="btn btn-secondary btn-sm px-4 @nextDisabled"
-       asp-route-sort="@ViewBag.CurrentSort"
-       asp-route-filter="@ViewBag.CurrentFilter"
+       asp-route-sort="@Model.CurrentSort"
+       asp-route-filter="@Model.CurrentFilter"
        asp-route-pageIndex="@(Model.PageIndex + 1)"
        asp-route-pageSize="@Model.PageSize"
        asp-action="Index">

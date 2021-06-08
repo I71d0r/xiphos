@@ -38,7 +38,7 @@ namespace Xiphos.Areas.Administration.Controllers
     /// <summary>
     /// Melody administration controller
     /// </summary>
-    [Authorize(Roles = UserRoles.User)]
+    [Authorize(Roles = Authorize.UserOrAdministrator)]
     [Area("Administration")]
     public class MelodyController : Controller
     {
@@ -47,7 +47,6 @@ namespace Xiphos.Areas.Administration.Controllers
 
         private const string CreateOperationName = "CreateMelody";
         private const string EditOperationName = "EditMelody";
-        private const int DefaultPageSize = 5;
 
         public MelodyController(ProductDbContext dbContext, ILogger<MelodyController> logger)
             => (_dbContext, _logger) =
@@ -72,62 +71,15 @@ namespace Xiphos.Areas.Administration.Controllers
             //  View data will allow to adjust the visuals.
             ViewBag.IsAdmin = User.IsInRole(UserRoles.Administrator);
 
-            Sort.ParseOrDefault(sort, out string property, out string direction);
-
-            // These properties will be rendered on column headers, they represent what should
-            // be the sort when you click on the header, not what is the sort right now.
-            // Either we are sorting by {propertyX} then flip direction,
-            // or we are not, then set sort to {propertyX} with default direction.
-            ViewBag.IdSort = Sort.GetSort(
-                property: Sort.Property.Id,
-                direction: property == Sort.Property.Id ? Sort.FlipDirection(direction) : Sort.Direction.Default);
-
-            ViewBag.NameSort = Sort.GetSort(
-                property: Sort.Property.Name,
-                direction: property == Sort.Property.Name ? Sort.FlipDirection(direction) : Sort.Direction.Default);
-
-            ViewBag.CurrentSort = Sort.GetSort(property, direction);
-            ViewBag.IdArrow = Sort.GetSortingArrow(Sort.Property.Id, property, direction);
-            ViewBag.NameArrow = Sort.GetSortingArrow(Sort.Property.Name, property, direction);
-            ViewBag.CurrentFilter = filter ?? string.Empty;
-
             // Used for delete action link so we wont loose the view configuration
             ViewBag.QueryString = Request.QueryString;
 
-            // Query melodies - firstly adjust the linq views accordingly
-            var melodies = _dbContext.Melodies.AsQueryable();
-
-            // Sorting
-            melodies = property switch
-            {
-                Sort.Property.Id => direction switch
-                {
-                    Sort.Direction.Ascending => melodies.OrderBy(m => m.Id),
-                    Sort.Direction.Descending => melodies.OrderByDescending(m => m.Id),
-                    _ => melodies
-                },
-                Sort.Property.Name => direction switch
-                {
-                    Sort.Direction.Ascending => melodies.OrderBy(m => m.Name),
-                    Sort.Direction.Descending => melodies.OrderByDescending(m => m.Name),
-                    _ => melodies
-                },
-                _ => melodies
-            };
-
-            // Search filter
-            if (!string.IsNullOrEmpty(filter))
-            {
-                // Consider that case sensitivity of contains depends on data source and/or used collation.
-                melodies = melodies.Where(m => m.Name.Contains(filter));
-            }
-
-            // Paging
-            var pagedModel =
-                await MelodyListModel.FetchAsync(
-                    melodies,
-                    !pageIndex.HasValue || pageSize < 0 ? 0 : pageIndex.Value,
-                    pageSize ?? DefaultPageSize);
+            var pagedModel = await MelodyListModel.FetchAsync(
+                 _dbContext.Melodies.AsQueryable(), 
+                 sort, 
+                 filter, 
+                 pageIndex, 
+                 pageSize);
 
             return View(pagedModel);
         }
@@ -140,7 +92,7 @@ namespace Xiphos.Areas.Administration.Controllers
         /// <param name="query">Query string as dictionary</param>
         /// <returns>Editor view</returns>
         [HttpGet]
-        [Authorize(Roles = UserRoles.Administrator)]
+        [Authorize(Roles = Authorize.Administrator)]
         public ActionResult Create([FromQuery] IDictionary<string, string> query)
         {
             ViewBag.Header = "Create New Melody";
@@ -161,7 +113,7 @@ namespace Xiphos.Areas.Administration.Controllers
         /// <param name="query">Query string as dictionary</param>
         /// <returns>Editor view</returns>
         [HttpGet]
-        [Authorize(Roles = UserRoles.Administrator)]
+        [Authorize(Roles = Authorize.Administrator)]
         public async Task<ActionResult> Edit(int id, [FromQuery] IDictionary<string, string> query)
         {
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
@@ -201,7 +153,6 @@ namespace Xiphos.Areas.Administration.Controllers
         /// <param name="query">Query string as a dictionary</param>
         /// <returns>Read-only editor view</returns>
         [HttpGet]
-        [Authorize(Roles = UserRoles.UserOrAdministrator)]
         public async Task<ActionResult> View(int id, [FromQuery] IDictionary<string, string> query)
         {
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
@@ -235,7 +186,7 @@ namespace Xiphos.Areas.Administration.Controllers
         /// <returns>Index view with given query</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = UserRoles.Administrator)]
+        [Authorize(Roles = Authorize.Administrator)]
         public async Task<ActionResult> Save(string operation, string query, MelodyModel melodyModel)
         {
             _logger.LogInformation("Write operation requested {0}");
@@ -283,7 +234,7 @@ namespace Xiphos.Areas.Administration.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = UserRoles.Administrator)]
+        [Authorize(Roles = Authorize.Administrator)]
         public async Task<ActionResult> Delete(int id, string query)
         {
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);

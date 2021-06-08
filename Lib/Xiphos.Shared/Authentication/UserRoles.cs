@@ -18,11 +18,6 @@ namespace Xiphos.Shared.Authentication
         public const string Administrator = nameof(Administrator);
 
         /// <summary>
-        /// Regular logged in user or an administrator
-        /// </summary>
-        public const string UserOrAdministrator = User + "," + Administrator;
-
-        /// <summary>
         /// Set of all roles
         /// </summary>
         public static IEnumerable<string> AllRoles => new[] { User, Administrator };
