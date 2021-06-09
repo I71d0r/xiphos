@@ -24,6 +24,14 @@ namespace Xiphos.Data.Models
             return Enumerable.Empty<string>();
         }
 
+        /// <summary>
+        /// Fixes the melody format
+        /// </summary>
+        /// <param name="melody">Melody string</param>
+        /// <returns>Fixed melody string</returns>
+        public static string FixMelodyFormat(string melody)
+            => string.Join(" ", ParseNotes(melody));
+
         // DB | dB | Db | db => Db
         private static string CorrectNodeFormat(string note)
             => note.Length > 1 ?

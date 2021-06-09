@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Manage Melodies";
+
+    var returnUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}";
 }
 
 <div class="text-left">
@@ -15,10 +17,7 @@
         {
             <div class="mr-5">
                 <a class="btn btn-outline-primary px-4"
-                   asp-route-sort="@Model.IdSort"
-                   asp-route-filter="@Model.CurrentFilter"
-                   asp-route-pageIndex="@Model.PageIndex"
-                   asp-route-pageSize="@Model.PageSize"
+                   asp-route-returnUrl="@returnUrl"
                    asp-action="Create">
                     New Melody
                 </a>
@@ -112,10 +111,7 @@
                             @if (ViewBag.IsAdmin)
                             {
                                 <a class="btn btn-outline-primary btn-sm px-4"
-                                   asp-route-sort="@Model.CurrentSort"
-                                   asp-route-filter="@Model.CurrentFilter"
-                                   asp-route-pageIndex="@Model.PageIndex"
-                                   asp-route-pageSize="@Model.PageSize"
+                                   asp-route-returnUrl="@returnUrl"
                                    asp-action="Edit"
                                    asp-route-id="@item.Id">
                                     Edit
@@ -125,13 +121,8 @@
                                     We want a confirmation before delete. Therefore we will use the form
                                     with a script on submit button.
                                 *@
-                                <form asp-route-sort="@Model.CurrentSort"
-                                      asp-route-filter="@Model.CurrentFilter"
-                                      asp-route-pageIndex="@Model.PageIndex"
-                                      asp-route-pageSize="@Model.PageSize"
-                                      asp-action="Delete">
+                                <form asp-route-returnUrl="@returnUrl" asp-action="Delete">
                                     <input type="hidden" name="id" value="@item.Id" />
-                                    <input type="hidden" name="query" value="@ViewBag.QueryString" />
                                     <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm ml-4 px-4"
                                            onclick="return confirm('Are you sure you want to delete @item.Name?');" />
                                 </form>

@@ -9,7 +9,7 @@ function noteToHtml(note) {
     var result = note;
 
     if (result.length > 2) result = "?"; // not a known note
-    if (result.endsWith("b")) result = result.substr(0, result.length - 1) + "<sup>b</sup>";
+    if (result.endsWith("b") && result.length > 1) result = result.substr(0, result.length - 1) + "<sup>b</sup>";
 
     return result;
 }

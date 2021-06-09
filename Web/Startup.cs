@@ -123,7 +123,7 @@ namespace Xiphos
                 // https://docs.microsoft.com/cs-cz/aspnet/core/mvc/controllers/areas?view=aspnetcore-5.0
                 endpoints.MapControllerRoute(
                     name: "areas",
-                    pattern: "{area:exists}/{controller=Recording}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=Melody}/{action=Index}/{id?}");
 
                 // Default controller
                 endpoints.MapControllerRoute(

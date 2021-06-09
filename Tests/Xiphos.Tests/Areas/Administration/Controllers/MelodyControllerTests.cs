@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Moq;
 using Xiphos.Areas.Administration.Controllers;
 using Xiphos.Areas.Administration.Models;
-using Xiphos.Data;
+using Xiphos.Data.Models;
+using Xiphos.Data.ProductDatabase;
 using Xiphos.Shared.Authentication;
 using Xunit;
 

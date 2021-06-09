@@ -21,10 +21,21 @@
                 <td>
                     @Html.DisplayFor(r => r.Id)
                     @* --Notable--
-                        Hidden input id will be mapped to id property. This is not done automatically
-                        because we have just a non-editable label rendered instead of text box editor.
+                        Id is read only, but we still want to bind it in in and out since the save method
+                        has to have it.
+
+                        You can use property name and value like so.
+                            
+                            <input type="hidden" name="Id" value="@Model.Id" />
+
+                        Another and more direct way bind the data is using the tag helper asp-for.
+                        
+                            <input asp-for="Id" />
+
+                        Note that asp-for similarly functions as two-way data binding in forms.
+                        Also note that Model object is implicit and you specify just the property.
                     *@
-                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <input type="hidden" asp-for="Id" />
                 </td>
             </tr>
         }
@@ -35,7 +46,6 @@
                 Templating methods have also overloads allowing to pass custom attributes to rendered elements.
                 E.g. @Html.TextBoxFor(r => r.Name, new { style = "..." })
             *@
-
             <td>
                 @* --Notable--
                     Conditional rendering is one way how to achieve contextual changes.

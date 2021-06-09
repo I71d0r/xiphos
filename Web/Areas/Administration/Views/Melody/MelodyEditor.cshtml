@@ -21,13 +21,7 @@
                     This will be mapped to action parameter operation.
                 *@
                 <input type="hidden" name="operation" value="@ViewBag.Operation" />
-
-                @* --Notable--
-                    Hidden input carries also current query string stored in view data in action code.
-                *@
-                <input type="hidden" name="query" value="@ViewBag.QueryString" />
-
-
+                <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
                 <input class="btn btn-primary" type="submit" name="submit" value="Save" />
                 <input class="ml-3 btn btn-warning" type="reset" value="Reset Changes" />
 
@@ -35,7 +29,7 @@
                     The asp-all-route-data tag allows to pass additional query data.
                     We need to pass the origin query string back to not loose the view configuration.
                 *@
-                <a class="ml-3 btn btn-secondary" asp-action="Index" asp-all-route-data="@ViewBag.Parameters">Cancel Edit</a>
+                <a class="ml-3 btn btn-secondary" href="@ViewBag.ReturnUrl">Cancel Edit</a>
             </div>
         }
     }

@@ -5,10 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Xiphos.Areas.Administration.Models;
 using Xiphos.Data.Models;
 using Xiphos.Data.ProductDatabase;
@@ -101,16 +99,18 @@ namespace Xiphos.Areas.Administration.Controllers
         /// <returns>Editor view</returns>
         [HttpGet]
         [Authorize(Roles = Authorize.Administrator)]
-        public ActionResult Create([FromQuery] IDictionary<string, string> query)
+        public ActionResult Create()
         {
+            StoreReturnUrl();
+
             ViewBag.Header = "Create New Melody";
             ViewBag.Operation = CreateOperationName;
             ViewBag.ReadOnly = false;
-            ViewBag.Parameters = query;
-            ViewBag.QueryString = Request.QueryString;
 
             return View("~/Areas/Administration/Views/Melody/MelodyEditor.cshtml", null);
         }
+
+
 
         // --Notable--
         //   Parsing querystring as dictionary is easily doable with FromQuery attribute.
@@ -124,6 +124,8 @@ namespace Xiphos.Areas.Administration.Controllers
         [Authorize(Roles = Authorize.Administrator)]
         public async Task<ActionResult> Edit(int id)
         {
+            StoreReturnUrl();
+
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
 
             if (melody == null)
@@ -137,20 +139,6 @@ namespace Xiphos.Areas.Administration.Controllers
             ViewBag.Operation = EditOperationName;
             ViewBag.ReadOnly = false;
 
-            // --Notable--
-            // The grid from which we select the item to edit/view have some sorting, paging, or filter applied.
-            // These values are parameters passed as query string. In order to not loose the current grid 
-            // setup, we are passing the same values to editor, and from which we will pass them back on 
-            // submit/cancel actions.
-            // For more complicated scenarios, we could pack everything into a return url parameter.
-            ViewBag.Parameters = Query;
-
-            // --Notable--
-            // A different story is the form submit button, where we need to pass the query string 
-            // as a hidden input field to be mapped as an action parameter in save method.
-            // This view data will allow to pass such information.
-            ViewBag.QueryString = Request.QueryString;
-
             return View("~/Areas/Administration/Views/Melody/MelodyEditor.cshtml", melody);
         }
 
@@ -163,6 +151,8 @@ namespace Xiphos.Areas.Administration.Controllers
         [HttpGet]
         public async Task<ActionResult> View(int id)
         {
+            StoreReturnUrl();
+
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
 
             if (melody == null)
@@ -170,7 +160,6 @@ namespace Xiphos.Areas.Administration.Controllers
 
             ViewBag.Header = "Melody Details";
             ViewBag.ReadOnly = true;
-            ViewBag.Parameters = Query;
 
             return View("~/Areas/Administration/Views/Melody/MelodyEditor.cshtml", melody);
         }
@@ -189,13 +178,13 @@ namespace Xiphos.Areas.Administration.Controllers
         /// Saves given melody to the database
         /// </summary>
         /// <param name="operation">Save operation type (create|edit)</param>
-        /// <param name="query">Request query string</param>
+        /// <param name="returnUrl">Where to go next</param>
         /// <param name="melodyModel">Data model</param>
         /// <returns>Index view with given query</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Authorize.Administrator)]
-        public async Task<ActionResult> Save(string operation, string query, MelodyModel melodyModel)
+        public async Task<ActionResult> Save(string operation, string returnUrl, MelodyModel melodyModel)
         {
             _logger.LogInformation("Write operation requested {0}");
 
@@ -212,6 +201,8 @@ namespace Xiphos.Areas.Administration.Controllers
 
                 throw new InvalidOperationException($"Operation {operation} failed. Model is invalid.{Environment.NewLine}{errors}");
             }
+
+            melodyModel.Data = MelodyHelper.FixMelodyFormat(melodyModel.Data);
 
             switch (operation)
             {
@@ -231,7 +222,7 @@ namespace Xiphos.Areas.Administration.Controllers
                 default: throw new InvalidOperationException($"Operation {operation} is invalid.");
             }
 
-            return RedirectToAction(nameof(Index), QueryStringToObject(query));
+            return SafeRedirect(returnUrl);
         }
 
         /// <summary>
@@ -243,7 +234,7 @@ namespace Xiphos.Areas.Administration.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Authorize.Administrator)]
-        public async Task<ActionResult> Delete(int id, string query)
+        public async Task<ActionResult> Delete(int id, string returnUrl)
         {
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
 
@@ -253,25 +244,30 @@ namespace Xiphos.Areas.Administration.Controllers
             _dbContext.Melodies.Remove(melody);
             await _dbContext.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index), QueryStringToObject(query));
+            return SafeRedirect(returnUrl);
         }
 
-        private object QueryStringToObject(string queryString)
+        private void StoreReturnUrl()
         {
-            //todo: revisit how RedirectToAction with query string
-            //  RedirectToAction parameter routeValues is an object whose properties get converted to route parameters.
-            //  I was looking for how to pass query string values in runtime but did not found anything good yet.
-            //  Therefore, this complicated dynamic object construction.
-            dynamic routeValues = new ExpandoObject();
-            IDictionary<string, object> objProperties = routeValues;
-
-            var parsedQueryString = HttpUtility.ParseQueryString(queryString ?? string.Empty);
-            foreach (string key in parsedQueryString)
+            if (Query.TryGetValue("returnUrl", out string url))
             {
-                objProperties.Add(key, parsedQueryString.Get(key));
+                ViewBag.ReturnUrl = url;
+            }
+            else
+            {
+                ViewBag.ReturnUrl = string.Empty;
+            }
+        }
+
+        private ActionResult SafeRedirect(string returnUrl)
+        {
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                // go to default view
+                return View();
             }
 
-            return routeValues;
+            return Redirect(returnUrl);
         }
     }
 }
