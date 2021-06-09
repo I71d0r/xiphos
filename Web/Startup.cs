@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,12 +10,11 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.DataAnnotations;
+using Xiphos.Areas.Administration.Validation;
 using Xiphos.Credentials;
-using Xiphos.Data;
+using Xiphos.Data.ProductDatabase;
 using Xiphos.Data.ServiceDatabase;
 using Xiphos.Shared.Authentication;
-using Xiphos.Areas.Administration.Validation;
 
 namespace Xiphos
 {
@@ -66,7 +66,7 @@ namespace Xiphos
             services.AddDefaultIdentity<IdentityUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
-                    
+
                     // --Notable--
                     // Identity options are quite rich by default.
                     // Here you can for instance configure your password validation rules.
@@ -79,7 +79,7 @@ namespace Xiphos
                 .AddEntityFrameworkStores<ServiceDbContext>();
 
             services.AddControllersWithViews();
-            
+
             AddCustomValidation(services);
         }
 
@@ -202,7 +202,7 @@ namespace Xiphos
                 var isUser = await userManager.IsInRoleAsync(user, UserRoles.User);
 
                 if (isUser) continue;
-                 
+
                 logger.LogWarning("Assigning role {role} to user {user}", UserRoles.User, user.UserName);
                 await userManager.AddToRoleAsync(user, UserRoles.User);
             }

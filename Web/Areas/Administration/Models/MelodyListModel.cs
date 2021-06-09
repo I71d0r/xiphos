@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xiphos.Areas.Administration.Controllers;
+using Xiphos.Data.Models;
 
 namespace Xiphos.Areas.Administration.Models
 {
@@ -95,8 +96,8 @@ namespace Xiphos.Areas.Administration.Models
 
             var result = new MelodyListModel()
             {
-                PageIndex = !pageIndex.HasValue || pageSize < 0 ? 0 : pageIndex.Value,
-                PageSize = pageSize ?? DefaultPageSize
+                PageIndex = pageIndex.HasValue && pageIndex > 0 ? pageIndex.Value : 0,
+                PageSize = pageSize.HasValue && pageSize > 0 ? pageSize.Value : DefaultPageSize
             };
 
             Sort.ParseOrDefault(sort, out string property, out string direction);

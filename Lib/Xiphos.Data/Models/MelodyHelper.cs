@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Xiphos.Areas.Administration.Models
+namespace Xiphos.Data.Models
 {
     /// <summary>
     /// Melody parsing helper

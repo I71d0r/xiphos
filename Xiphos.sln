@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xiphos.Tests", "Tests\Xipho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xiphos.Shared", "Lib\Xiphos.Shared\Xiphos.Shared.csproj", "{3C054E7D-BA81-4C38-A3AD-B258A4E22F06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xiphos.Data", "Lib\Xiphos.Data\Xiphos.Data.csproj", "{D0780151-19BB-468C-BCA8-9B78C1A74BDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{3C054E7D-BA81-4C38-A3AD-B258A4E22F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C054E7D-BA81-4C38-A3AD-B258A4E22F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C054E7D-BA81-4C38-A3AD-B258A4E22F06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0780151-19BB-468C-BCA8-9B78C1A74BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0780151-19BB-468C-BCA8-9B78C1A74BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0780151-19BB-468C-BCA8-9B78C1A74BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0780151-19BB-468C-BCA8-9B78C1A74BDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{A1737321-4E2E-4EE0-B102-5CE4F1E22C93} = {0389D770-845F-4C27-9183-C8515BEDC735}
 		{01FD4868-322D-40C9-9609-ACF1AF9110ED} = {69941F0F-5609-46F9-9155-F4B667ECB7A7}
 		{3C054E7D-BA81-4C38-A3AD-B258A4E22F06} = {0389D770-845F-4C27-9183-C8515BEDC735}
+		{D0780151-19BB-468C-BCA8-9B78C1A74BDB} = {0389D770-845F-4C27-9183-C8515BEDC735}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A088E95B-55CB-4458-AB1A-AF67418B8C31}

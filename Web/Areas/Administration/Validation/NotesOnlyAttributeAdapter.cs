@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.Extensions.Localization;
+using Xiphos.Data.Annotations;
 
 namespace Xiphos.Areas.Administration.Validation
 {

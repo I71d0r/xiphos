@@ -10,7 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Xiphos.Areas.Administration.Models;
-using Xiphos.Data;
+using Xiphos.Data.Models;
+using Xiphos.Data.ProductDatabase;
 using Xiphos.Shared.Authentication;
 
 namespace Xiphos.Areas.Administration.Controllers
@@ -48,6 +49,13 @@ namespace Xiphos.Areas.Administration.Controllers
         private const string CreateOperationName = "CreateMelody";
         private const string EditOperationName = "EditMelody";
 
+        // --Notable--
+        // Property binding is another way how to carry data from query, header or forms.
+        // Default support is for POST only.
+        [BindProperty(SupportsGet = true)]
+        [FromQuery]
+        public IDictionary<string, string> Query { get; set; }
+
         public MelodyController(ProductDbContext dbContext, ILogger<MelodyController> logger)
             => (_dbContext, _logger) =
                 (
@@ -75,10 +83,10 @@ namespace Xiphos.Areas.Administration.Controllers
             ViewBag.QueryString = Request.QueryString;
 
             var pagedModel = await MelodyListModel.FetchAsync(
-                 _dbContext.Melodies.AsQueryable(), 
-                 sort, 
-                 filter, 
-                 pageIndex, 
+                 _dbContext.Melodies.AsQueryable(),
+                 sort,
+                 filter,
+                 pageIndex,
                  pageSize);
 
             return View(pagedModel);
@@ -114,7 +122,7 @@ namespace Xiphos.Areas.Administration.Controllers
         /// <returns>Editor view</returns>
         [HttpGet]
         [Authorize(Roles = Authorize.Administrator)]
-        public async Task<ActionResult> Edit(int id, [FromQuery] IDictionary<string, string> query)
+        public async Task<ActionResult> Edit(int id)
         {
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
 
@@ -135,7 +143,7 @@ namespace Xiphos.Areas.Administration.Controllers
             // setup, we are passing the same values to editor, and from which we will pass them back on 
             // submit/cancel actions.
             // For more complicated scenarios, we could pack everything into a return url parameter.
-            ViewBag.Parameters = query;
+            ViewBag.Parameters = Query;
 
             // --Notable--
             // A different story is the form submit button, where we need to pass the query string 
@@ -153,7 +161,7 @@ namespace Xiphos.Areas.Administration.Controllers
         /// <param name="query">Query string as a dictionary</param>
         /// <returns>Read-only editor view</returns>
         [HttpGet]
-        public async Task<ActionResult> View(int id, [FromQuery] IDictionary<string, string> query)
+        public async Task<ActionResult> View(int id)
         {
             var melody = await _dbContext.Melodies.FirstOrDefaultAsync(m => m.Id == id);
 
@@ -162,7 +170,7 @@ namespace Xiphos.Areas.Administration.Controllers
 
             ViewBag.Header = "Melody Details";
             ViewBag.ReadOnly = true;
-            ViewBag.Parameters = query;
+            ViewBag.Parameters = Query;
 
             return View("~/Areas/Administration/Views/Melody/MelodyEditor.cshtml", melody);
         }

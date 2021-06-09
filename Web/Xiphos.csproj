@@ -18,6 +18,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Lib\Xiphos.Credentials\Xiphos.Credentials.csproj" />
+		<ProjectReference Include="..\Lib\Xiphos.Data\Xiphos.Data.csproj" />
 		<ProjectReference Include="..\Lib\Xiphos.Shared\Xiphos.Shared.csproj" />
 	</ItemGroup>
 

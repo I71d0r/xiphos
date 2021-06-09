@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Xiphos.Areas.Administration.Models;
+using Xiphos.Data.Models;
 
-namespace Xiphos.Areas.Administration.Validation
+namespace Xiphos.Data.Annotations
 {
     /// <summary>
     /// Validation attribute for melody data
@@ -28,7 +28,7 @@ namespace Xiphos.Areas.Administration.Validation
 
             return fails.Count == 0
                 ? ValidationResult.Success
-                : new ValidationResult($"Invalid notes: {string.Join(',', fails)}", new[] {nameof(MelodyModel.Data)});
+                : new ValidationResult($"Invalid notes: {string.Join(',', fails)}", new[] { nameof(MelodyModel.Data) });
         }
     }
 }

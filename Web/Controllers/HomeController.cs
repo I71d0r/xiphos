@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Xiphos.Data;
+using Xiphos.Data.ProductDatabase;
 using Xiphos.Models;
 
 namespace Xiphos.Controllers
@@ -57,7 +57,7 @@ namespace Xiphos.Controllers
 
             var count = await query.CountAsync();
             var melodyTable = await query.Take(limit)
-                .Select(m => new {name = m.Name, id = m.Id})
+                .Select(m => new { name = m.Name, id = m.Id })
                 .ToArrayAsync();
 
             var result = new
@@ -65,7 +65,7 @@ namespace Xiphos.Controllers
                 filteredCount = count - melodyTable.Length,
                 melodies = melodyTable
             };
-                
+
             return Json(result);
         }
 

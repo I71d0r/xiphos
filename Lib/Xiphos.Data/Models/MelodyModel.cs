@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Xiphos.Areas.Administration.Validation;
+using Xiphos.Data.Annotations;
 
-namespace Xiphos.Areas.Administration.Models
+namespace Xiphos.Data.Models
 {
     /// <summary>
     /// Melody model
