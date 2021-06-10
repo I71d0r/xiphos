@@ -3,6 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    @* --Notable--
+        Layout is a partial view that gets merged with the final view/page.
+        In order to modify the layout based on the page displayed, you
+        can use ViewData/ViewBag where what you set on controller/page code-behind
+        will be accessible in the rendering process.
+           For instance here the page set title that is rendered by layout as HTML
+        as the layout owns the head section.
+    *@
     <title>@ViewData["Title"] - Xiphos</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
@@ -24,6 +33,16 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Tone Zone</a>
                         </li>
                     </ul>
+
+                    @* --Notable--
+                        The tag partial renders the partial view. 
+                        Similarly, you can use a server expression like
+                        
+                        @await Html.PartialAsync("_MyPartialView", myModel)
+
+                        This gets handy especially for complex but repepetive UI elements
+                        which you can easily render in a loop thru a model collection.
+                    *@
                     <partial name="_LoginPartial" />
                 </div>
             </div>

@@ -119,6 +119,29 @@ namespace Xiphos
             // Endpoints and routing rules
             app.UseEndpoints(endpoints =>
             {
+                // --Notable--
+                //  Routing constraints allow to specify that a certain part of the route will be binded
+                //  as argument. In our case it is the Id parameter that will be mapped as action argument.
+                //  There are constraints you can apply to this argument.
+                //
+                //   area:exists
+                //      The routing matches only existing areas
+                //
+                //   ?
+                //      The parameter is optional and does not have to be specified. For instance action
+                //      Index does not require Id. On the other hand Edit does. Edit action argument
+                //      is "int id" and if you call Melody/Edit without the Id the routing will match
+                //      but the conversion from null to int will thro exception. Action parameter could
+                //      be a nullable type though if this is by design.
+                //
+                //   :int
+                //      The parameter has to be an integer
+                //
+                //   :alpha
+                //      The parameter has to be an alphanumerical string
+
+
+                // --Notable--
                 // Routing is order-dependent, area routing has to be defined BEFORE more specific routing.
                 // https://docs.microsoft.com/cs-cz/aspnet/core/mvc/controllers/areas?view=aspnetcore-5.0
                 endpoints.MapControllerRoute(
@@ -147,6 +170,14 @@ namespace Xiphos
 
                 // Retrieve the real connection string
                 options.UseSqlServer(credentialStore.GetServiceDatabaseConnectionString());
+
+                // -- Notable --
+                //  Selecting the database implementation happens here.
+                //  Addin a package reference to MySQL data provider, I'd be able
+                //  to call UseMySQL( ... ) where I would pass given connection string.
+                //  Note that migrations are data provider specific and cannot be 
+                //  used once you do the switch.
+                //  You can easily create a fresh one though using the command Add-Migration
             });
 
             // Configure product DB context
