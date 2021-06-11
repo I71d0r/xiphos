@@ -77,6 +77,9 @@
         console.log("Test 1");
         console.log("Test 2");
 *@
+
+@* Note that scripts are better to maintain in separate files. 
+   Here we need to pass some model values to the scipt. *@
 <script type="text/javascript">
     var maxCount = @Model.MaxDisplayRowsCount;
     var filter = @Html.Raw(string.IsNullOrEmpty(ViewBag.Filter) ? "\"\"" : ViewBag.Filter);

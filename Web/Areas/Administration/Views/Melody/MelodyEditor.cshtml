@@ -40,6 +40,9 @@
     to perform a client side validation.
 *@
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <partial name="_ValidationScriptsPartial" />
+    @* Also feasible with @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); } *@
+
     <script src="~/js/melody-validators.js" asp-append-version="true"></script>
 }
