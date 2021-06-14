@@ -30,7 +30,9 @@ namespace Xiphos.Controllers
             var model = new ToneZoneModel()
             {
                 DisplayDebugMessages = _displayDebugMessages,
-                Melodies = await _dbContext.Melodies.ToArrayAsync()
+                Melodies = await _dbContext.Melodies
+                    .Take(ToneZoneModel.DefaultRowCount)
+                    .ToArrayAsync()
             };
 
             ViewBag.Filter = string.Empty;

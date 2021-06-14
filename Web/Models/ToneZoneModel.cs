@@ -1,5 +1,4 @@
-﻿using Xiphos.Areas.Administration.Models;
-using Xiphos.Data.Models;
+﻿using Xiphos.Data.Models;
 
 namespace Xiphos.Models
 {
@@ -9,6 +8,11 @@ namespace Xiphos.Models
     public class ToneZoneModel
     {
         /// <summary>
+        /// Default number of melody rows on the page selection
+        /// </summary>
+        public const int DefaultRowCount = 5;
+
+        /// <summary>
         /// Whether or not display debug information on Tone Zone UI
         /// </summary>
         public bool DisplayDebugMessages { get; set; }
@@ -16,7 +20,7 @@ namespace Xiphos.Models
         /// <summary>
         /// Max row count in melody list
         /// </summary>
-        public int MaxDisplayRowsCount { get; set; } = 5;
+        public int MaxDisplayRowsCount { get; set; } = DefaultRowCount;
 
 
         /// <summary>
